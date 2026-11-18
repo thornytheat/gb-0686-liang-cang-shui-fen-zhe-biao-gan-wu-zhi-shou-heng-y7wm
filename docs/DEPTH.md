@@ -15,6 +15,7 @@
 | M5 仓批平衡 | 逐仓核对干物质平衡 | `/api/m5` | `app/modules/m5_balance/rules.py` `app/modules/m5_balance/service.py` | `tests/test_m5_balance.py` |
 | M6 结算复核 | 结算到分并保留尾差依据 | `/api/m6` | `app/modules/m6_settlement/rules.py` `app/modules/m6_settlement/service.py` | `tests/test_m6_settlement.py` |
 | M7 批次追溯 | 检查行数平衡与证据摘要 | `/api/m7` | `app/modules/m7_trace/rules.py` `app/modules/m7_trace/service.py` | `tests/test_m7_trace.py` |
+| 车次账台 | 地磅毛皮分录入账、迟到皮重补配、仓批对账 | `/trips` `/api/trips` | `app/tripdesk/rules.py` `app/tripdesk/service.py` `app/tripdesk/store.py` | `tests/test_tripdesk.py` |
 
 ## 陷阱登记
 
@@ -28,6 +29,10 @@
 | TRAP-14 | 同版矛盾 | 后写覆盖 | 同版均隔离 | `app/modules/m4_truckmerge/rules.py` | `tests/test_m4_truckmerge.py::test_conflict_keeps_neither` |
 | TRAP-15 | 吨与千克 | 数量差千倍 | 统一kg | `app/modules/m2_contract/rules.py` | `tests/test_m2_contract.py::test_unit_ton` |
 | TRAP-24 | 结算尾差 | 分录不守恒 | 最大余额分到分 | `app/modules/m6_settlement/rules.py` | `tests/test_m6_settlement.py::test_largest_remainder_conservation` |
+| TRAP-31 | 皮重隔天补传 |  FIFO把下一趟皮重记到这一趟 | 最近在先毛重配对，皮重只消费一次 | `app/tripdesk/rules.py` | `tests/test_tripdesk.py::test_pair_binds_nearest_preceding_gross` |
+| TRAP-32 | 补传重跑 | 重复入仓 | 上传摘要重放+称重号幂等 | `app/tripdesk/service.py` | `tests/test_tripdesk.py::test_same_upload_replays_without_double_intake` |
+| TRAP-33 | 暂估皮重 | 估算当实称入账 | 标记来源，真皮重原位替换 | `app/tripdesk/service.py` | `tests/test_tripdesk.py::test_late_tare_completes_trip_without_disturbing_settled` |
+| TRAP-34 | 补配后重算分币 | 已定车次金额被挤动 | 仓批累计舍入链，金额确认即冻结 | `app/tripdesk/rules.py` | `tests/test_tripdesk.py::test_amounts_frozen_and_chain_conserved` |
 
 ## 对账规则
 

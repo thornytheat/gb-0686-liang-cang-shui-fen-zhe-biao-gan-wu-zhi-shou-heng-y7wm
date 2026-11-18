@@ -10,3 +10,8 @@ SAMPLES = Path(__file__).resolve().parent.parent / "sample_data"
 MAX_BYTES = 4 * 1024 * 1024
 
 COLUMNS.update({'clean_kg':'净粮 kg','delta_kg':'平衡差 kg','moisture':'水分 %','impurity':'杂质 %','key':'业务键','detail':'依据','unit':'单位','gross':'毛重','tare':'皮重'})
+COLUMNS.update({'trip_id':'车次','plate':'车牌','day':'日期','gross_event_id':'毛重磅单','tare_event_id':'皮重磅单',
+                'weighed_local':'称重时间','weight_kg':'重量 kg','tare_state':'皮重状态','estimate_source':'暂估来源',
+                'estimated_amount':'暂估 CNY','confirmed_amount':'已定 CNY','pending':'待皮重','confirmed':'已定',
+                'trips':'车次','upload_id':'上传批次','created':'时间','rows':'行数','accepted':'采信',
+                'quarantined':'隔离','note':'备注','event_id':'称重号','state':'状态','upload':'上传'})
